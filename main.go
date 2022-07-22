@@ -4,7 +4,7 @@ import "fmt"
 
 //初始化方法
 func init() {
-
+	//测试IDEA提交到git
 }
 
 func main() {
