@@ -2,7 +2,12 @@ package main
 
 import "fmt"
 
-func main()  {
+//初始化方法
+func init() {
+
+}
+
+func main() {
 	fmt.Println("请输入1开始游戏")
 	var stats int
 	fmt.Scan(&stats)
