@@ -50,16 +50,24 @@ func start() {
 			break
 		case 1:
 			time.Sleep(time.Duration(1) * time.Second)
-			fmt.Println("遇到妖兽")
+			sz := zl.GetSz()
+			xz := sz[zl.Wdwz]
+			fmt.Println("遇到", xz["xz"])
 		case 2:
 			time.Sleep(time.Duration(1) * time.Second)
-			fmt.Println("遇到妖兽")
+			sz := zl.GetSz()
+			xz := sz[zl.Wdwz]
+			fmt.Println("遇到", xz["xz"])
 		case 3:
 			time.Sleep(time.Duration(1) * time.Second)
-			fmt.Println("遇到妖兽")
+			sz := zl.GetSz()
+			xz := sz[zl.Wdwz]
+			fmt.Println("遇到", xz["xz"])
 		case 4:
 			time.Sleep(time.Duration(1) * time.Second)
-			fmt.Println("遇到妖兽")
+			sz := zl.GetSz()
+			xz := sz[zl.Wdwz]
+			fmt.Println("遇到", xz["xz"])
 		default:
 			fmt.Println("未知错误")
 		}

@@ -2,7 +2,13 @@ package zl
 
 import (
 	"fmt"
+	"github.com-go/wzyx/gs"
 	"github.com-go/wzyx/js"
+)
+
+const (
+	//我的位置始终在数组的中间位置
+	Wdwz = 220
 )
 
 //指令包下有对应游戏的操作指令
@@ -63,7 +69,7 @@ func GetSz() [21 * 21]map[string]string {
 }
 
 //选择方向时将数组整个后移或前移21位，并生成21个map
-func QjOrht(stats int) {
+func QjOrht(stats int, x int, y int) {
 	switch stats {
 	case Wstats:
 		temp := [21 * 21]map[string]string{}
@@ -72,7 +78,12 @@ func QjOrht(stats int) {
 			if i >= 21 {
 				sz[i] = temp[i-21]
 			} else {
-				sz[i] = map[string]string{"xz": "空地"}
+				newGs := gs.IsNewGs(x, y)
+				if newGs > 0 {
+					sz[i] = scmap(newGs, x, y)
+				} else {
+					sz[i] = map[string]string{"xz": "空地"}
+				}
 			}
 		}
 	case Sstats:
@@ -80,7 +91,12 @@ func QjOrht(stats int) {
 		for i, _ := range sz {
 			temp[i] = sz[i]
 			if i >= 21*20 {
-				sz[i] = map[string]string{"xz": "空地"}
+				newGs := gs.IsNewGs(x, y)
+				if newGs > 0 {
+					sz[i] = scmap(newGs, x, y)
+				} else {
+					sz[i] = map[string]string{"xz": "空地"}
+				}
 			} else {
 				sz[i] = temp[i]
 			}
@@ -90,7 +106,12 @@ func QjOrht(stats int) {
 		for i, _ := range sz {
 			temp[i] = sz[i]
 			if i%21 == 0 {
-				sz[i] = map[string]string{"xz": "空地"}
+				newGs := gs.IsNewGs(x, y)
+				if newGs > 0 {
+					sz[i] = scmap(newGs, x, y)
+				} else {
+					sz[i] = map[string]string{"xz": "空地"}
+				}
 			} else {
 				sz[i] = temp[i-1]
 			}
@@ -98,7 +119,12 @@ func QjOrht(stats int) {
 	case Dstats:
 		for i, _ := range sz {
 			if (i+1)%21 == 0 {
-				sz[i] = map[string]string{"xz": "空地"}
+				newGs := gs.IsNewGs(x, y)
+				if newGs > 0 {
+					sz[i] = scmap(newGs, x, y)
+				} else {
+					sz[i] = map[string]string{"xz": "空地"}
+				}
 			} else {
 				sz[i] = sz[i+1]
 			}
@@ -113,12 +139,91 @@ func QjOrht(stats int) {
 //获取x,y坐标生成四周的环境，并每次移动，传送时更新
 func InitSz(x int, y int) {
 	for index, _ := range sz {
-		if index%2 == 0 {
-			sz[index] = map[string]string{"xz": "兽族"}
+		newGs := gs.IsNewGs(x, y)
+		if newGs > 0 {
+			sz[index] = scmap(newGs, x, y)
 		} else {
-			sz[index] = map[string]string{"xz": "人族"}
+			sz[index] = map[string]string{"xz": "空地"}
+			//fmt.Printf("sz->>>%v\n",sz)
 		}
+		//if index%2 == 0 {
+		//	gs := gs.GetGs(x, y)
+		//	sz[index] = map[string]string{"xz": gs.Xz}
+		//} else {
+		//	sz[index] = map[string]string{"xz": "人族"}
+		//}
 
+	}
+}
+
+//生成map
+func scmap(newGs int, x int, y int) map[string]string {
+	switch newGs {
+	case 1:
+		gs := gs.GetGs(x, y)
+		m := map[string]string{
+			"xz": "人族",
+			"gj": string(gs.Gj),
+			"fy": string(gs.Fy),
+			"xl": string(gs.Xl),
+		}
+		return m
+		//fmt.Printf("sz->>>%v\n",sz)
+	case 2:
+		gs := gs.GetGs(x, y)
+		m := map[string]string{
+			"xz": "兽族",
+			"gj": string(gs.Gj),
+			"fy": string(gs.Fy),
+			"xl": string(gs.Xl),
+		}
+		return m
+		//fmt.Printf("sz->>>%v\n",sz)
+	case 3:
+		gs := gs.GetGs(x, y)
+		m := map[string]string{
+			"xz": "龙族",
+			"gj": string(gs.Gj),
+			"fy": string(gs.Fy),
+			"xl": string(gs.Xl),
+		}
+		return m
+		//fmt.Printf("sz->>>%v\n",sz)
+	case 4:
+		gs := gs.GetGs(x, y)
+		m := map[string]string{
+			"xz": "精灵",
+			"gj": string(gs.Gj),
+			"fy": string(gs.Fy),
+			"xl": string(gs.Xl),
+		}
+		return m
+		//fmt.Printf("sz->>>%v\n",sz)
+	case 5:
+		gs := gs.GetGs(x, y)
+		m := map[string]string{
+			"xz": "魔族",
+			"gj": string(gs.Gj),
+			"fy": string(gs.Fy),
+			"xl": string(gs.Xl),
+		}
+		return m
+		//fmt.Printf("sz->>>%v\n",sz)
+	case 6:
+		gs := gs.GetGs(x, y)
+		m := map[string]string{
+			"xz": "神族",
+			"gj": string(gs.Gj),
+			"fy": string(gs.Fy),
+			"xl": string(gs.Xl),
+		}
+		return m
+		//fmt.Printf("sz->>>%v\n",sz)
+	default:
+		m := map[string]string{
+			"xz": "空地",
+		}
+		return m
 	}
 }
 
@@ -127,19 +232,27 @@ func DySz() {
 	i := 21
 	for index, m := range sz {
 		if (index+1)%i == 0 {
-			if index == 230 {
+			//if index == 230 {
+			if index == 221 {
 				fmt.Print("[", js.GetY()+10-index/i, ":", js.GetY(), "]\n")
+				//fmt.Print("[", m["xz"], "]\t\n")
 			} else {
 				fmt.Print("[", m["xz"], "]", "\n")
 			}
-		} else if (index+1)%i == 11 {
-			fmt.Print("[", js.GetX(), ":", js.GetY()+10-index/i, "]\t")
+			//} else if (index+1)%i == 11 {
+			//fmt.Print("[", js.GetX(), ":", js.GetY()+10-index/i, "]\t")
+			//fmt.Print("[", m["xz"], "]\t")
 		} else {
-			if index >= 210 && index < 231 {
-				fmt.Print("[", js.GetX()+index%i-10, ":", js.GetY(), "]\t")
+			//if index >= 210 && index < 231 {
+			//	fmt.Print("[", js.GetX()+index%i-10, ":", js.GetY(), "]\t")
+			//fmt.Print("[", m["xz"], "]\t")
+			//} else {
+			if index == 220 {
+				fmt.Print("[", js.GetX(), ":", js.GetY(), "]\t")
 			} else {
 				fmt.Print("[", m["xz"], "]\t")
 			}
+			//}
 		}
 	}
 }

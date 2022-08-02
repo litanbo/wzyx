@@ -106,22 +106,22 @@ func xd(str string) int {
 	case "W":
 		fmt.Println("您向前走了一步。")
 		js.SetY(js.GetY() + 1)
-		QjOrht(Wstats)
+		QjOrht(Wstats, js.GetX(), js.GetY())
 		return Wstats
 	case "S":
 		fmt.Println("您向后退了一步。")
 		js.SetY(js.GetY() - 1)
-		QjOrht(Sstats)
+		QjOrht(Sstats, js.GetX(), js.GetY())
 		return Sstats
 	case "A":
 		fmt.Println("您向前左转一步。")
 		js.SetX(js.GetX() - 1)
-		QjOrht(Astats)
+		QjOrht(Astats, js.GetX(), js.GetY())
 		return Astats
 	case "D":
 		fmt.Println("您向前右转一步。")
 		js.SetX(js.GetX() + 1)
-		QjOrht(Dstats)
+		QjOrht(Dstats, js.GetX(), js.GetY())
 		return Dstats
 	case "I":
 		fmt.Print("菜单：\n")
